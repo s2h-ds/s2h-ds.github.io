@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+
+
+.left {
+	margin: auto;
+/*	width: 50%;*/
+	padding-bottom: 100px;
+	background-color: #FFF;
+	padding-left: 10px;
+}
+
+.crop {
+	padding-top:50px;
+	height: 500px;
+	background-color: #FFF;
+}
+.all{
+	background-color: #FFF;
+}
+
+h2 {
+	font-family: nunito;
+	text-align: left;
+	font-size: 28px;
+	font-weight: bold;
+}
+p {
+	font-family: nunito;
+	text-align: left;
+	color: #212121;
+	font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<p id="demo"></p>
+
+<script>
+
+ 	function callAppian(url, apiKey, evt, envId, caseId) {
+ 		var callbackUrl = url;
+
+		var request = new XMLHttpRequest();
+		request.open("POST", callbackUrl);
+
+		request.mode = "no-cors";
+
+		request.setRequestHeader("Appian-API-Key", apiKey);
+		request.setRequestHeader("Content-type", "application/json");
+		request.setRequestHeader("Access-Control-Allow-Origin", '*');
+		request.setRequestHeader("Access-Control-Allow-Credentials", true);
+
+		request.onreadystatechange = function () {
+		   if (request.readyState === 4) {
+		      console.log(request.status);
+		      console.log(request.responseText);
+		   }};
+
+		request.send(JSON.stringify({"envelopeId": envId, "event": evt, "caseId": caseId}));
+
+		return 0;
+ 	}
+
+
+	var queryString = window.location.search;
+	// console.log(queryString);
+	var urlParams = new URLSearchParams(queryString);
+	var url = urlParams.get('url');
+	var apiKey = urlParams.get('apiKey');
+	var event = urlParams.get('event');
+	var envelopeId = urlParams.get('envelope');
+	var caseId = urlParams.get('caseId');
+
+	document.getElementById("demo").innerHTML = urlParams.get('status');
+	
+    callAppian(url, apiKey, event, envelopeId, caseId);
+
+</script>
+
+<!-- <div class="loader"></div> -->
+
+<!-- <i class="material-icons icon">fact_check</i> -->
+<div class="all" >
+	<div class="crop">
+	<img src="https://i.pinimg.com/originals/41/85/a1/4185a1b6b4a453bfa8340dca90e2b4fa.png">
+</div>
+<div class="left">
+	<h2>Almost Done!</h2>
+	<p>Please click the next button to sign and authenticate.</p>
+</div>
+</div>
+
+</body>
+</html>
